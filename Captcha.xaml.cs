@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SportShop
 {
@@ -76,8 +77,28 @@ namespace SportShop
             {
                 GetCaptcha();
                 UserPassword.Text = "";
-                MessageBox.Show("Ошибка");
+                MessageBox.Show("Вы заблокированы на 10 секунд!");
+
+                BlockUser();
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Tick += new EventHandler(UnblockUser);
+                timer.Interval = new TimeSpan(0, 0, 10);
+                timer.Start();
             }
+        }
+
+        private void BlockUser()
+        {
+            UserLogin.IsEnabled = false;
+            UserPassword.IsEnabled = false;
+            CaptchaUser.IsEnabled = false;
+        }
+
+        private void UnblockUser(object sender, EventArgs e)
+        {
+            UserLogin.IsEnabled = true;
+            UserPassword.IsEnabled = true;
+            CaptchaUser.IsEnabled = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

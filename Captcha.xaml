@@ -38,5 +38,7 @@
         <Label Content="Введите текст с картинки" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2"></Label>
         <TextBox x:Name="CaptchaText" Height="25" Width="150" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="5" Grid.ColumnSpan="2" IsEnabled="False"></TextBox>
         <TextBox x:Name="CaptchaUser" Height="25" Width="150" HorizontalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2"></TextBox>
+
+        <TickBar x:Name="TickBar" Height="30" Width="30" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TickBar>
     </Grid>
 </Window>
