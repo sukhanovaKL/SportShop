@@ -36,10 +36,17 @@ namespace SportShop
                 "0-10%", "10-15%", "15-∞%", "All ranges"
             };
 
+            OrderByFilter.ItemsSource = new List<string>
+            {
+                "Сброс", "По возрастанию", "По убыванию"
+            };
+
             if (_user != null)
                 UserFio.Content = _user.UserSurname + " " + _user.UserName + " " + _user.UserName;
             else
                 UserFio.Content = "Неавторизированный пользователь";
+
+            CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { ListProducts.Items.Count }";
         }
 
         private void ButtonExit_OnClick(object sender, RoutedEventArgs e)
@@ -59,25 +66,60 @@ namespace SportShop
             {
                 case 0:
                     {
-                        ListProducts.ItemsSource = db.Product.Where(p => p.ProductDiscountAmount < 10).ToList();
+                        ListProducts.ItemsSource = db.Product.Where(p => p.ProductMaxDiscountAmount < 10).ToList();
+                        CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { db.Product.ToList().Count }";
                         break;
                     }
                 case 1:
                     {
-                        ListProducts.ItemsSource = db.Product.Where(p => p.ProductDiscountAmount > 10 && p.ProductDiscountAmount < 15).ToList();
+                        ListProducts.ItemsSource = db.Product.Where(p => p.ProductMaxDiscountAmount > 10 && p.ProductMaxDiscountAmount < 15).ToList();
+                        CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { db.Product.ToList().Count }";
                         break;
                     }
                 case 2:
                     {
-                        ListProducts.ItemsSource = db.Product.Where(p => p.ProductDiscountAmount > 15).ToList();
+                        ListProducts.ItemsSource = db.Product.Where(p => p.ProductMaxDiscountAmount > 15).ToList();
+                        CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { db.Product.ToList().Count }";
                         break;
                     }
                 case 3:
                     {
                         ListProducts.ItemsSource = db.Product.ToList();
+                        CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { db.Product.ToList().Count }";
                         break;
                     }
             }
+        }
+
+        private void OrderByFilter_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (OrderByFilter.SelectedIndex)
+            {
+                case 0:
+                    {
+                        ListProducts.ItemsSource = db.Product.ToList();
+                        CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { db.Product.ToList().Count }";
+                        break;
+                    }
+                case 1:
+                    {
+                        ListProducts.ItemsSource = db.Product.OrderBy(x => x.ProductCost).ToList();
+                        CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { db.Product.ToList().Count }";
+                        break;
+                    }
+                case 2:
+                    {
+                        ListProducts.ItemsSource = db.Product.OrderByDescending(x => x.ProductCost).ToList();
+                        CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { db.Product.ToList().Count }";
+                        break;
+                    }
+            }
+        }
+
+        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ListProducts.ItemsSource = db.Product.Where(x => x.ProductName.Contains(Search.Text)).ToList();
+            CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { db.Product.ToList().Count }";
         }
     }
 }

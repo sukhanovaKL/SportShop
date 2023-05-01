@@ -27,7 +27,7 @@ namespace SportShop
         public string ProductName { get; set; }
         public int UnitTypeID { get; set; }
         public decimal ProductCost { get; set; }
-        public Nullable<byte> ProductMaxDiscountAmount { get; set; }
+        public byte? ProductMaxDiscountAmount { get; set; }
         public int ProductManufacturerID { get; set; }
         public int ProductSupplierID { get; set; }
         public int ProductCategoryID { get; set; }
@@ -44,9 +44,12 @@ namespace SportShop
         public virtual UnitType UnitType { get; set; }
 
         [NotMapped]
-        public SolidColorBrush ColorProductDiscountAmount => ProductDiscountAmount > 15 ? new SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#7fff00")) : new SolidColorBrush(System.Windows.Media.Color.FromArgb(0, 0, 0, 0));
+        public SolidColorBrush ColorProductDiscountAmount => ProductMaxDiscountAmount > 15 ? new SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#7fff00")) : new SolidColorBrush(System.Windows.Media.Color.FromArgb(0, 0, 0, 0));
 
         [NotMapped]
         public string ProductPhotoFromResources => "/Photos/" + ProductPhoto;
+
+        [NotMapped]
+        public double ProductCostWithAmount => double.Parse(ProductCost.ToString()) - (double.Parse(ProductCost.ToString()) * (double.Parse(ProductMaxDiscountAmount.ToString()) / 100.0));
     }
 }

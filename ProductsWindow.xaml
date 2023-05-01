@@ -16,6 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="9*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -23,12 +24,18 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="UserFio" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right" Content="UserFio"></Label>
-        <Button Name="ButtonExit" Click="ButtonExit_OnClick" Grid.Row="1" Grid.Column="1" Background="#FF76E383">Выйти</Button>
+        <Label x:Name="CounterList" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Показано записей ... из ..."></Label>
+        <Label x:Name="UserFio" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Content="UserFio"></Label>
+        <Button Name="ButtonExit" Click="ButtonExit_OnClick" Grid.Row="1" Grid.Column="1" Background="#FF76E383" Height="30" Width="250">Выйти</Button>
 
-        <ComboBox Background="#FF76E383" Grid.Row="1" Name="ComboBoxFilterProductDiscountAmount" SelectionChanged="ComboBoxFilterProductDiscountAmount_OnSelectionChanged"/>
+        <Label Content="Скидка" Grid.Row="1" HorizontalAlignment="Left"></Label>
+        <ComboBox Background="#FF76E383" Grid.Row="1" Name="ComboBoxFilterProductDiscountAmount" SelectionChanged="ComboBoxFilterProductDiscountAmount_OnSelectionChanged" Height="30" Width="350" HorizontalAlignment="Right"/>
+        <Label Content="Сортировать по" Grid.Row="2" HorizontalAlignment="Left"></Label>
+        <ComboBox Background="#FF76E383" Grid.Row="2" Name="OrderByFilter" SelectionChanged="OrderByFilter_OnSelectionChanged" Height="30" Width="350" HorizontalAlignment="Right"/>
+        <Label Content="Поиск" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"></Label>
+        <TextBox x:Name="Search" Grid.Row="2" Grid.Column="1" Height="30" Width="350" HorizontalAlignment="Right" TextChanged="Search_TextChanged"></TextBox>
 
-        <ListView Grid.Row="2" Grid.ColumnSpan="2" x:Name="ListProducts" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListView Grid.Row="3" Grid.ColumnSpan="2" x:Name="ListProducts" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel ItemWidth="900" ItemHeight="200"/>
@@ -54,8 +61,9 @@
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ProductName}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                             <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ProductDescription}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ProductManufacturer.ProductManufacturerName}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ProductCost}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                            <TextBlock Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Text="{Binding ProductDiscountAmount}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ProductCost}" VerticalAlignment="Center" HorizontalAlignment="Left" TextDecorations="Strikethrough"></TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ProductCostWithAmount}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Text="{Binding ProductMaxDiscountAmount}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                         </Grid>
                     </Border>
                 </DataTemplate>
