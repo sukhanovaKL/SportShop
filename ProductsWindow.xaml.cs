@@ -40,7 +40,7 @@ namespace SportShop
             {
                 "Сброс", "По возрастанию", "По убыванию"
             };
-
+            
             if (_user != null)
                 UserFio.Content = _user.UserSurname + " " + _user.UserName + " " + _user.UserName;
             else
@@ -120,6 +120,19 @@ namespace SportShop
         {
             ListProducts.ItemsSource = db.Product.Where(x => x.ProductName.Contains(Search.Text)).ToList();
             CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { db.Product.ToList().Count }";
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            var product = (sender as Button)?.DataContext as Product;
+            new EditCreateWindow(product, _user, true).Show();
+        }
+
+        private void AddProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            new EditCreateWindow(new Product(), _user, false).Show();
         }
     }
 }

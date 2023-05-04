@@ -25,6 +25,7 @@
         </Grid.ColumnDefinitions>
 
         <Label x:Name="CounterList" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Показано записей ... из ..."></Label>
+        <Button x:Name="AddProductButton" Content="Добавить" HorizontalAlignment="Left" Height="25" Width="100" Background="#FF76E383" Margin="0,7,0,0" VerticalAlignment="Top" Click="AddProductButton_Click"></Button>
         <Label x:Name="UserFio" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Content="UserFio"></Label>
         <Button Name="ButtonExit" Click="ButtonExit_OnClick" Grid.Row="1" Grid.Column="1" Background="#FF76E383" Height="30" Width="250">Выйти</Button>
 
@@ -56,6 +57,7 @@
                                 <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                             <Image Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Source="{Binding ProductPhotoFromResources, FallbackValue={StaticResource NullImage}}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="90" Height="90"></Image>
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ProductName}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
@@ -64,6 +66,7 @@
                             <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ProductCost}" VerticalAlignment="Center" HorizontalAlignment="Left" TextDecorations="Strikethrough"></TextBlock>
                             <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ProductCostWithAmount}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                             <TextBlock Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Text="{Binding ProductMaxDiscountAmount}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                            <Button x:Name="EditButton" Content="Редактировать" Grid.Column="4" Grid.Row="1" Grid.RowSpan="2"  Background="#FF76E383" Height="25" Width="100"  VerticalAlignment="Center" HorizontalAlignment="Left" Click="EditButton_Click"></Button>
                         </Grid>
                     </Border>
                 </DataTemplate>
