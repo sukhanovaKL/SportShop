@@ -1,0 +1,75 @@
+﻿<Window x:Class="SportShop.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SportShop" xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Заказ" Height="500" Width="900">
+    <Window.Resources>
+        <system:String x:Key="NullImage">
+            pack://application:,,,/Photos/picture.png
+        </system:String>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Button x:Name="CompleteOrderButton" Content="Заказать" HorizontalAlignment="Right" Height="25" Width="100" Background="#FF76E383" Margin="0,7,0,0" VerticalAlignment="Top" Click="CompleteOrderButton_Click" Grid.Column="1" Grid.Row="2"></Button>
+        <Button x:Name="ExitButton" Content="Назад" HorizontalAlignment="Stretch" Height="25" Width="100" Background="#FF76E383" Margin="0,7,0,0" VerticalAlignment="Top" Click="ExitButton_Click"  Grid.Column="1" Grid.Row="2"></Button>
+        <Button x:Name="PrintButton" Content="Печать" HorizontalAlignment="Left" Height="25" Width="100" Background="#FF76E383" Margin="0,7,0,0" VerticalAlignment="Top" Click="PrintButton_Click"  Grid.Column="1" Grid.Row="2"></Button>
+        
+        <Label Content="Пункт выдачи"></Label>
+        <ComboBox Name="PickupPointComboBox" Width="200" Height="25" SelectedValue="{Binding Product.ProductManufacturer.ProductManufacturerName }" ></ComboBox>
+
+        <Label Content="Дата доставки" Grid.Row="1"></Label>
+        <DatePicker Name="DeliveryDateDatePicker" Width="200" Height="25"  Grid.Row="1"></DatePicker>
+
+        <Label x:Name="PriceText" Grid.Row="2" Width="200" Height="25"></Label>
+
+        <ListView Grid.Row="3" Grid.ColumnSpan="2" x:Name="ListProducts" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel ItemWidth="900" ItemHeight="200"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1" BorderBrush="Black">
+                        <Grid Width="900" Height="200" Background="{Binding ColorProductDiscountAmount }">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Source="{Binding Product.ProductPhotoFromResources, FallbackValue={StaticResource NullImage}}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="90" Height="90"></Image>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Product.ProductName}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Product.ProductDescription}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Product.ProductManufacturer.ProductManufacturerName}" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Product.ProductCost}" VerticalAlignment="Center" HorizontalAlignment="Left" TextDecorations="Strikethrough"></TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Product.ProductCostWithAmount}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" Text="{Binding Count}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                            <Button x:Name="DeleteButton" Content="Удалить из заказа" Grid.Column="4" Grid.Row="1" Grid.RowSpan="2"  Background="#FF76E383" Height="25" Width="100"  VerticalAlignment="Center" HorizontalAlignment="Left" Click="DeleteButton_Click"></Button>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>

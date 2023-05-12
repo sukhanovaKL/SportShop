@@ -26,6 +26,7 @@
 
         <Label x:Name="CounterList" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Показано записей ... из ..."></Label>
         <Button x:Name="AddProductButton" Content="Добавить" HorizontalAlignment="Left" Height="25" Width="100" Background="#FF76E383" Margin="0,7,0,0" VerticalAlignment="Top" Click="AddProductButton_Click"></Button>
+        <Button x:Name="CreateOrderButton" Content="Перейти к заказу" HorizontalAlignment="Stretch" Height="25" Width="100" Background="#FF76E383" Margin="0,7,0,0" VerticalAlignment="Top" Click="CreateOrderButton_Click" ></Button>
         <Label x:Name="UserFio" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Content="UserFio"></Label>
         <Button Name="ButtonExit" Click="ButtonExit_OnClick" Grid.Row="1" Grid.Column="1" Background="#FF76E383" Height="30" Width="250">Выйти</Button>
 
@@ -45,7 +46,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1" BorderBrush="Black">
-                        <Grid Width="900" Height="200" Background="{Binding ColorProductDiscountAmount }">
+                        <Grid Width="900" Height="200" Background="{Binding ColorProductDiscountAmount }" MouseRightButtonDown="Grid_MouseRightButtonDown">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
@@ -72,5 +73,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        
+        
     </Grid>
 </Window>

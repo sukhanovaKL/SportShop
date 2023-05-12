@@ -23,6 +23,10 @@ namespace SportShop
 
         private User _user;
 
+        private Order Order;
+
+        private List<OrderProduct> OrderProducts;
+
         public ProductsWindow(User user)
         {
             InitializeComponent();
@@ -47,6 +51,8 @@ namespace SportShop
                 UserFio.Content = "Неавторизированный пользователь";
 
             CounterList.Content = $"Показано записей { ListProducts.Items.Count } из { ListProducts.Items.Count }";
+
+            CreateOrderButton.Visibility = Visibility.Hidden;
         }
 
         private void ButtonExit_OnClick(object sender, RoutedEventArgs e)
@@ -133,6 +139,42 @@ namespace SportShop
         {
             Hide();
             new EditCreateWindow(new Product(), _user, false).Show();
+        }
+
+        private void Grid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (OrderProducts == null)
+                OrderProducts = new List<OrderProduct>();
+
+            var result = MessageBox.Show("Добавить товар в заказ?", "Добавление товара", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    var product = (((sender as Grid).DataContext as Product));
+                    if (OrderProducts.Select(x => x.Product).ToList().Contains(product))
+                        OrderProducts.Find(x => x.Product == product).Count = OrderProducts.Find(x => x.Product == product).Count += 1;
+                    else
+                        OrderProducts.Add(new OrderProduct{ Product = product, Count = 1});
+                    break;
+                case MessageBoxResult.Cancel:
+                    break;
+                case MessageBoxResult.None:
+                case MessageBoxResult.OK:
+                case MessageBoxResult.No:
+                default:
+                    break;
+            }
+
+            if(OrderProducts.Any())
+                CreateOrderButton.Visibility = Visibility.Visible;
+            else
+                CreateOrderButton.Visibility = Visibility.Hidden; 
+        }
+
+        private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            new OrderWindow(OrderProducts).Show();
         }
     }
 }
